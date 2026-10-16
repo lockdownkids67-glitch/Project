@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRON MAN | Satellite Mission</title>
+
+<style>
+:root {
+  --green: #39ff88;
+  --bg: #050a0b;
+  --panel: #0b1517;
+  --border: #174d3a;
+  --text: #d9fbe8;
+  --muted: #8aa99a;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+header {
+  padding: 28px 6%;
+  border-bottom: 1px solid var(--border);
+  background: #071110;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  color: var(--green);
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-size: 22px;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+nav a:hover { color: var(--green); }
+
+.hero {
+  min-height: 410px;
+  display: flex;
+  align-items: center;
+  padding: 65px 7%;
+  background:
+    radial-gradient(ellipse at 80% 30%, #103d2b 0%, transparent 40%),
+    linear-gradient(120deg, #050a0b, #0b1b17);
+}
+
+.hero-content { max-width: 800px; }
+
+.eyebrow {
+  color: var(--green);
+  letter-spacing: 3px;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: clamp(40px, 8vw, 76px);
+  line-height: 1.05;
+  margin: 15px 0;
+}
+
+h1 span { color: var(--green); }
+
+h2 { color: var(--green); }
+
+h3 { color: #a8ffd0; }
+
+p { color: var(--muted); }
+
+button, .button {
+  border: 1px solid var(--green);
+  background: var(--green);
+  color: #03110a;
+  padding: 12px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button:hover, .button:hover {
+  background: transparent;
+  color: var(--green);
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--green);
+  margin-left: 8px;
+}
+
+section { padding: 55px 7%; }
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  padding: 22px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  transition: transform .2s, border-color .2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--green);
+}
+
+.icon { font-size: 30px; }
+
+.tag {
+  display: inline-block;
+  color: var(--green);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+}
+
+.highlight {
+  border-left: 3px solid var(--green);
+  padding: 10px 18px;
+  background: #0a1913;
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+}
+
+th { color: var(--green); background: #0b1914; }
+
+tr:nth-child(even) { background: #091112; }
+
+.status {
+  display: inline-block;
+  color: var(--green);
+  font-size: 12px;
+}
+
+.metric {
+  font-size: 27px;
+  font-weight: bold;
+  color: var(--green);
+}
+
+.small { font-size: 12px; }
+
+.terminal {
+  background: #020605;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: monospace;
+  overflow-wrap: anywhere;
+}
+
+.terminal p { color: var(--green); margin: 5px 0; }
+
+.steps {
+  border-left: 2px solid var(--border);
+  padding-left: 25px;
+}
+
+.step { margin: 25px 0; }
+
+footer {
+  text-align: center;
+  padding: 30px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+#copyStatus {
+  color: var(--green);
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+@media(max-width:600px) {
+  header { position: static; }
+  nav { gap: 10px; }
+  .button.secondary { margin: 10px 0 0; }
+  section { padding: 40px 5%; }
+  th, td { padding: 8px; font-size: 12px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-row">
+    <div class="logo">IRON MAN <span class="status">● MISSION CONCEPT</span></div>
+    <nav>
+      <a href="#mission">Mission</a>
+      <a href="#systems">Systems</a>
+      <a href="#components">Components</a>
+      <a href="#communication">Communication</a>
+      <a href="#team">Team</a>
+      <a href="#roadmap">Roadmap</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">SATELLITE TELEMETRY & GROUND STATION</div>
+    <h1>MISSION <span>IRON MAN</span></h1>
+    <p>
+      A student-built satellite demonstration project combining
+      electronics, sensor monitoring, wireless communication,
+      camera technology, and a web-based mission dashboard.
+    </p>
+    <a href="#mission" class="button">Explore Mission ↓</a>
+    <a href="#team" class="button secondary">Meet the Team</a>
+  </div>
+</div>
+
+<section id="mission">
+  <div class="section-label">01 / OUR VISION</div>
+  <h2>Mission Overview</h2>
+
+  <p>
+    IRON MAN is our proposed satellite telemetry demonstration.
+    Its purpose is to collect sensor measurements, transmit data
+    to a ground station, and present the information through a
+    web dashboard. CHAMPAK is the name of our assistant system.
+  </p>
+
+  <div class="highlight">
+    <strong>Our main goal:</strong>
+    Build a working miniature satellite system that demonstrates
+    how onboard electronics, sensors, communication, and ground
+    monitoring can work together.
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="icon">🛰️</div>
+      <h3>IRON MAN</h3>
+      <p>The satellite-side unit containing electronics and sensors.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🤖</div>
+      <h3>CHAMPAK</h3>
+      <p>Our assistant system for organizing status information and commands.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📡</div>
+      <h3>Ground Station</h3>
+      <p>The receiving and monitoring system connected to a laptop.</p>
+    </div>
+    <div class="card">
+      <div class="icon">💻</div>
+      <h3>Mission Dashboard</h3>
+      <p>A website concept for viewing telemetry and mission status.</p>
+    </div>
+  </div>
+</section>
+
+<section id="systems">
+  <div class="section-label">02 / SYSTEM ARCHITECTURE</div>
+  <h2>How the System Works</h2>
+
+  <div class="grid">
+    <div class="card">
+      <span class="tag">STAGE 1</span>
+      <h3>Collect</h3>
+      <p>Sensors measure selected environmental and movement-related values.</p>
+    </div>
+    <div class="card">
+      <span class="tag">STAGE 2</span>
+      <h3>Process</h3>
+      <p>The microcontroller reads the sensors and prepares telemetry data.</p>
+    </div>
+    <div class="card">
+      <span class="tag">STAGE 3</span>
+      <h3>Transmit</h3>
+      <p>A selected radio system sends data to the ground station.</p>
+    </div>
+    <div class="card">
+      <span class="tag">STAGE 4</span>
+      <h3>Display</h3>
+      <p>Ground-station software passes received data to the website dashboard.</p>
+    </div>
+  </div>
+
+  <div class="terminal">
+    <p>IRON MAN → SENSORS → MICROCONTROLLER</p>
+    <p>↓</p>
+    <p>WIRELESS RADIO LINK</p>
+    <p>↓</p>
+    <p>GROUND STATION → LAPTOP → WEB DASHBOARD</p>
+  </div>
+
+  <p class="small">
+    This is the proposed data flow. The complete live system will require
+    compatible hardware, firmware, and a connection between the ground
+    station and the website.
+  </p>
+</section>
+
+<section id="components">
+  <div class="section-label">03 / HARDWARE PLAN</div>
+  <h2>Components & Their Roles</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>ESP32 DevKit</h3>
+      <p>Reads sensors and performs processing for the satellite-side prototype.</p>
+    </div>
+    <div class="card">
+      <h3>Arduino Uno R3</h3>
+      <p>Can be used for ground-station control or a separate demonstration.</p>
+    </div>
+    <div class="card">
+      <h3>ESP32-CAM</h3>
+      <p>Captures images and may provide camera streaming over Wi-Fi.</p>
+    </div>
+    <div class="card">
+      <h3>MPU6050</h3>
+      <p>Measures acceleration and rotation to demonstrate movement and orientation.</p>
+    </div>
+    <div class="card">
+      <h3>BH1750</h3>
+      <p>Measures light intensity for a light-monitoring demonstration.</p>
+    </div>
+    <div class="card">
+      <h3>BMP280</h3>
+      <p>Measures atmospheric pressure and temperature. It cannot measure vacuum.</p>
+    </div>
+    <div class="card">
+      <h3>LoRa SX1278 RA-02</h3>
+      <p>A long-range radio option for transmitting small telemetry packets.</p>
+    </div>
+    <div class="card">
+      <h3>NRF24L01+ PA+LNA</h3>
+      <p>An alternative radio option for data transmission. It is not a sensor.</p>
+    </div>
+  </div>
+
+  <h3>Component Planning Table</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Purpose</th>
+        <th>Planning status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ESP32 DevKit</td>
+        <td>Processing and sensor interface</td>
+        <td>Already arranged</td>
+      </tr>
+      <tr>
+        <td>Arduino Uno R3</td>
+        <td>Ground-station controller option</td>
+        <td>Already arranged</td>
+      </tr>
+      <tr>
+        <td>ESP32-CAM</td>
+        <td>Camera demonstration</td>
+        <td>To confirm</td>
+      </tr>
+      <tr>
+        <td>MPU6050</td>
+        <td>Movement and rotation</td>
+        <td>To confirm</td>
+      </tr>
+      <tr>
+        <td>BH1750</td>
+        <td>Light intensity</td>
+        <td>To confirm</td>
+      </tr>
+      <tr>
+        <td>Radio system</td>
+        <td>Telemetry transmission</td>
+        <td>Final choice required</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight">
+    Before final assembly, confirm which components are available,
+    the power requirements, and the exact wiring for each module.
+  </div>
+</section>
+
+<section id="communication">
+  <div class="section-label">04 / TELEMETRY LINK</div>
+  <h2>Communication System</h2>
+
+  <p>
+    The satellite prototype will send small data packets to a receiving
+    ground station. The laptop will display the received measurements.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Option A: LoRa</h3>
+      <p>
+        SX1278 RA-02 modules can provide a long-range, low-data-rate
+        radio link when correctly configured.
+      </p>
+      <span class="tag">LONG-RANGE OPTION</span>
+    </div>
+    <div class="card">
+      <h3>Option B: NRF24L01+</h3>
+      <p>
+        The PA+LNA version is another radio option. Its actual range
+        depends on antennas, power, interference, and the environment.
+      </p>
+      <span class="tag">ALTERNATIVE OPTION</span>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>Team decision:</strong> Choose one radio system for the first
+    working link. Both radio types require compatible modules, suitable
+    antennas, correct wiring, and matching firmware at both ends.
+  </div>
+
+  <h3>Important Technical Details</h3>
+  <ul>
+    <li>RA-02 SX1278 and NRF24L01+ modules use 3.3 V power and logic.</li>
+    <li>Use an appropriate stable power supply for the selected radio.</li>
+    <li>Do not connect 5 V Arduino signals directly to 3.3 V-only radio inputs.</li>
+    <li>Camera images require substantially more bandwidth than small sensor readings.</li>
+    <li>Radio operation must follow applicable local frequency and power rules.</li>
+  </ul>
+</section>
+
+<section id="dashboard">
+  <div class="section-label">05 / MISSION CONTROL</div>
+  <h2>Telemetry Dashboard Preview</h2>
+
+  <p>
+    The following values are simulated examples to demonstrate the interface.
+    They are NOT readings from actual hardware.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <p>Temperature</p>
+      <div class="metric"><span id="temp">26.4</span> °C</div>
+      <span class="status">● DEMO DATA</span>
+    </div>
+    <div class="card">
+      <p>Light Intensity</p>
+      <div class="metric"><span id="light">350</span> lux</div>
+      <span class="status">● DEMO DATA</span>
+    </div>
+    <div class="card">
+      <p>Satellite Tilt</p>
+      <div class="metric"><span id="tilt">12</span>°</div>
+      <span class="status">● DEMO DATA</span>
+    </div>
+    <div class="card">
+      <p>Battery</p>
+      <div class="metric"><span id="battery">85</span>%</div>
+      <span class="status">● DEMO DATA</span>
+    </div>
+  </div>
+
+  <p class="small">
+    These numbers change only for demonstration. They do not represent
+    actual sensor measurements or battery condition.
+  </p>
+
+  <button onclick="updateDemo()">Refresh Demo Values</button>
+
+  <h3>System Status</h3>
+  <div class="terminal" aria-live="polite">
+    <p id="systemStatus">CHAMPAK: Dashboard initialized.</p>
+    <p>DATA SOURCE: SIMULATION</p>
+    <p>HARDWARE LINK: NOT CONNECTED TO THIS WEBPAGE</p>
+    <p>MISSION: DEVELOPMENT</p>
+  </div>
+</section>
+
+<section id="team">
+  <div class="section-label">06 / TEAM STRUCTURE</div>
+  <h2>Four Members, One Mission</h2>
+
+  <div class="grid">
+    <div class="card">
+      <div class="icon">🔧</div>
+      <h3>Person 1: Components</h3>
+      <p>
+        Manage sensors, microcontrollers, wiring, power requirements,
+        component testing, and hardware assembly.
+      </p>
+    </div>
+    <div class="card">
+      <div class="icon">💻</div>
+      <h3>Person 2: Webpage</h3>
+      <p>
+        Develop the GitHub website, dashboard interface, telemetry display,
+        and future live-data integration.
+      </p>
+    </div>
+    <div class="card">
+      <div class="icon">🎨</div>
+      <h3>Person 3: Design</h3>
+      <p>
+        Build the satellite body, ground-station model, component layout,
+        labels, and exhibition presentation.
+      </p>
+    </div>
+    <div class="card">
+      <div class="icon">📡</div>
+      <h3>Person 4: Communication</h3>
+      <p>
+        Configure the chosen radio, test data transfer, verify telemetry,
+        and connect the ground station to the laptop.
+      </p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    All four members should participate in final integration and testing.
+    The communication and webpage members will coordinate to display
+    real telemetry once the hardware link is operational.
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="section-label">07 / DEVELOPMENT PLAN</div>
+  <h2>From Idea to Demonstration</h2>
+
+  <div class="steps">
+    <div class="step">
+      <span class="tag">PHASE 1</span>
+      <h3>Finalize the Design</h3>
+      <p>Confirm the component list, responsibilities, radio choice, and power plan.</p>
+    </div>
+    <div class="step">
+      <span class="tag">PHASE 2</span>
+      <h3>Build the Hardware</h3>
+      <p>Connect and test the sensors and camera individually before full assembly.</p>
+    </div>
+    <div class="step">
+      <span class="tag">PHASE 3</span>
+      <h3>Establish Communication</h3>
+      <p>Send a test message between the satellite-side unit and ground station.</p>
+    </div>
+    <div class="step">
+      <span class="tag">PHASE 4</span>
+      <h3>Build Live Telemetry</h3>
+      <p>Pass received data from the ground-station software to the website.</p>
+    </div>
+    <div class="step">
+      <span class="tag">PHASE 5</span>
+      <h3>Final Demonstration</h3>
+      <p>Test the complete setup, prepare the presentation, and explain the results.</p>
+    </div>
+  </div>
+</section>
+
+<section id="meeting">
+  <div class="section-label">08 / TEAM MEETING</div>
+  <h2>Presentation Summary</h2>
+
+  <div class="card">
+    <h3>How to explain our project</h3>
+    <p>
+      "Our project, IRON MAN, is a student-built satellite telemetry
+      demonstration. We want to collect sensor data, transmit it to a ground
+      station, and display it on a website. We will divide the work into
+      hardware, webpage development, physical design, and communication.
+      First, we will make each part work individually, then integrate
+      everything into one system. CHAMPAK is the name of our assistant system."
+    </p>
+    <button onclick="copyPresentation()">Copy Presentation</button>
+    <span id="copyStatus" aria-live="polite"></span>
+  </div>
+</section>
+
+<section id="source">
+  <div class="section-label">09 / WEBSITE SOURCE</div>
+  <h2>Copy Website Code</h2>
+  <p>
+    This is a single-file website. Save it as index.html in your GitHub
+    repository. This button copies the complete source code from the
+    source area below, so the code can be copied when editing this file.
+  </p>
+
+  <button onclick="copySource()">Copy Code</button>
+  <span id="sourceStatus" aria-live="polite"></span>
+
+  <textarea id="sourceCode" readonly
+    style="position:absolute;left:-9999px;top:0;"
+    aria-label="Website source code"></textarea>
+
+  <p class="small">
+    Tip: To copy the full file reliably, use your editor's Select All
+    and Copy commands. A webpage cannot automatically retrieve its own
+    original HTML source in every browser environment.
+  </p>
+</section>
+
+<footer>
+  <p>IRON MAN SATELLITE PROJECT · CHAMPAK SYSTEM</p>
+  <p>Student engineering demonstration · Prototype under development</p>
+  <p>All dashboard values are simulated until real hardware is connected.</p>
+</footer>
+
+<script>
+function updateDemo() {
+  document.getElementById("temp").textContent =
+    (22 + Math.random() * 10).toFixed(1);
+
+  document.getElementById("light").textContent =
+    Math.floor(100 + Math.random() * 900);
+
+  document.getElementById("tilt").textContent =
+    Math.floor(Math.random() * 91);
+
+  document.getElementById("battery").textContent =
+    Math.floor(60 + Math.random() * 40);
+
+  document.getElementById("systemStatus").textContent =
+    "CHAMPAK: Demo values refreshed at " +
+    new Date().toLocaleTimeString() + ".";
+}
+
+async function copyText(text, statusId) {
+  const status = document.getElementById(statusId);
+
+  try {
+    await navigator.clipboard.writeText(text);
+    status.textContent = "Copied!";
+  } catch (error) {
+    status.textContent =
+      "Clipboard unavailable. Select and copy the text manually.";
+  }
+}
+
+function copyPresentation() {
+  const text =
+    "Our project, IRON MAN, is a student-built satellite telemetry " +
+    "demonstration. We want to collect sensor data, transmit it to a ground " +
+    "station, and display it on a website. We will divide the work into " +
+    "hardware, webpage development, physical design, and communication. " +
+    "First, we will make each part work individually, then integrate " +
+    "everything into one system. CHAMPAK is the name of our assistant system.";
+
+  copyText(text, "copyStatus");
+}
+
+function copySource() {
+  const status = document.getElementById("sourceStatus");
+  status.textContent =
+    "Open index.html in your GitHub editor and use Select All → Copy.";
+}
+</script>
+
+</body>
+                           </html>
